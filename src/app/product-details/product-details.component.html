@@ -1,0 +1,20 @@
+<div class="product">
+    <img [src]="getImageUrl(product())" [alt]="product().name" />
+    <div class="details">
+        <div>
+            <h2>{{ product().name }}</h2>
+            <p>{{product().description}}</p>
+            <p>Part Type: {{product().category}}</p>
+            <p>Available Inventory: {{ availableInvetory() }}</p>
+        </div>
+    </div>
+    <div class="price">
+        @if(product().discount > 0){
+        <p> {{ product().price * (1 - product().discount) | currency}} (sale)</p>
+        }@else{
+        <p>{{product().price | currency}}</p>
+    }
+        <button class="cta" (click)="addToCart($event)">Buy now</button>
+        
+    </div>
+</div>
