@@ -1,16 +1,21 @@
 import { Component, signal, input } from '@angular/core';
 import { IProduct } from '../../product.model';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, NgClass } from '@angular/common';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'bot-product-details',
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, NgClass],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss',
 })
 export class ProductDetailsComponent {
 public product = input.required<IProduct>();
 availableInvetory = signal(3);
+
+constructor(private cartService: CartService){
+  
+}
 
 
 getImageUrl(product: IProduct){
@@ -21,9 +26,12 @@ getImageUrl(product: IProduct){
 addToCart( event: MouseEvent){
   setTimeout(() => this.availableInvetory.update((p) => p - 1), 100);
  
-  console.log(event);
+ this.cartService.addToCart(this.product());
 }
 
+getPriceClass(){
+  return {strikethrough: this.product().discount > 0};
 
 
+}
 }

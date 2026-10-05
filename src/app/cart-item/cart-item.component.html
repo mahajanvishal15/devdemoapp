@@ -5,7 +5,7 @@
             <h2>{{ product().name }}</h2>
             <p>{{product().description}}</p>
             <p>Part Type: {{product().category}}</p>
-            <p>Available Inventory: {{ availableInvetory() }}</p>
+           
         </div>
     </div>
     <div class="price">
@@ -15,6 +15,6 @@
         }
         
     
-        <button class="cta" (click)="addToCart($event)">Buy now</button>
+        <button class="cta" (click)="removeFromCart()">Remove</button>
         
     </div>
