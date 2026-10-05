@@ -1,17 +1,57 @@
 
-    <img [src]="getImageUrl(product())" [alt]="product().name" />
+    @let p = product();
+    @let discountedPrice = p.price * (1 - p.discount) | currency;
+
+    <img [src]="getImageUrl(product())" [alt]="p.name" />
     <div class="details">
         <div>
-            <h2>{{ product().name }}</h2>
-            <p>{{product().description}}</p>
-            <p>Part Type: {{product().category}}</p>
-            <p>Available Inventory: {{ availableInvetory() }}</p>
+            <h2>{{ p.name }}</h2>
+            <p>{{p.description}}</p>
+            <p>Part Type: 
+                @switch(p.category)
+                {
+                    @case('Heads'){
+                        Head
+                    }  @case('Arms'){
+                        Arm
+                    }  @case('Bases'){
+                        Base
+                    }  @case('Torsos'){
+                        Torso
+                    }@default{
+                        {{p.category}}
+                    }
+
+                }
+                <!-- {{p.category}} -->
+            
+            </p>
+
+            @if(p.productNotes; as notes)
+            {
+            <p>Product Notes: {{notes}}</p>
+            }
+            <p>Available Inventory: {{ availableInvetory() }}
+                @if(availableInvetory() == 1)
+                {
+                    <span class="pill red">Only one item is left</span>
+                }@else if(availableInvetory() < 1)
+                {
+                    <span class="pill red">Out Of Stock</span>
+                }@else if(availableInvetory() < 3)
+                {
+                    <span class="pill yellow">Only Few are left</span>
+                }@else{
+                    <span class="pill">Get Yours today!</span>
+                }
+
+            </p>
         </div>
     </div>
     <div class="price">
-        <p [ngClass]="getPriceClass()">{{product().price | currency}}</p>
-        @if(product().discount > 0){
-        <p> {{ product().price * (1 - product().discount) | currency}} (sale)</p>
+        <p [ngClass]="getPriceClass()">{{p.price | currency}}</p>
+        @if(p.discount > 0){
+        <p> {{discountedPrice }} (sale)</p>
         }
         
     

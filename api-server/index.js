@@ -20,6 +20,7 @@ app.get("/api/products", (req, res) => {
     {
       id: 17,
       description: "A spring base - great for reaching high places.",
+      productNotes: "This product will be discontinued soon due to frequent chaotic behavior.",
       name: "Spring Base",
       imageName: "base-spring.png",
       category: "Bases",
